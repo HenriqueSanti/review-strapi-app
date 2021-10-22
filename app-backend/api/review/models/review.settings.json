@@ -38,6 +38,11 @@
       "type": "richtext",
       "required": true,
       "unique": true
+    },
+    "categories": {
+      "collection": "categories",
+      "via": "reviews",
+      "dominant": true
     }
   }
 }
