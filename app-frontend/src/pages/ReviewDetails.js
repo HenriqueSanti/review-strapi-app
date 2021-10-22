@@ -1,14 +1,19 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery, gql } from '@apollo/client'
+import ReactMarkdown from 'react-markdown'
 
 const REVIEW = gql`
     query getReviews($id: ID!) {
         review(id: $id) {
-        id, 
-        Title,
-        Rating,
-        Body
+            id, 
+            Title,
+            Rating,
+            Body,
+            categories {
+               Category,
+               id 
+            }
         }
     }
 `
@@ -29,8 +34,12 @@ export default function ReviewDetails() {
             <div className="review-card">
                     <div className="rating">{data.review.Rating}</div>
                     <h2>{data.review.Title}</h2>
-                    <small>Console list</small>
-                    <p>{data.review.Body}</p>
+                    
+                    {data.review.categories.map(category => (
+                        <small key={category.id}>{category.Category}</small>
+                    ))}
+
+                    <ReactMarkdown>{data.review.Body}</ReactMarkdown>
                 </div>
         </div>
     )
